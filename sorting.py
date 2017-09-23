@@ -1,6 +1,38 @@
 from heapq import heappush, heappop
 import math
 from random import randint
+import numpy as np
+
+from heapq import merge
+  
+def merge_sort(m):
+    if len(m) <= 1:
+        return m
+  
+    middle = len(m) // 2
+    left = m[:middle]
+    right = m[middle:]
+  
+    left = merge_sort(left)
+    right = merge_sort(right)
+    return list(merge(left, right))
+
+def numpyy(arr):
+    return np.sort(arr)
+
+def np_count_sort(a):
+    buckets = np.bincount(a)
+    return np.repeat(np.arange(buckets.shape()[0] + 1), buckets)
+
+def ins_sort(k):
+    for i in range(1,len(k)):    #since we want to swap an item with previous one, we start from 1
+        j = i                    #bcoz reducing i directly will mess our for loop, so we reduce its copy j instead
+        temp = k[j]              #temp will be used for comparison with previous items, and sent to the place it belongs
+        while j > 0 and temp < k[j-1]: #j>0 bcoz no point going till k[0] since there is no seat available on its left, for temp
+            k[j] = k[j-1] #Move the bigger item 1 step right to make room for temp
+            j=j-1 #take k[j] all the way left to the place where it has a smaller/no value to its left.
+        k[j] = temp
+    return k
 
 def count_sort(array):
     maximum = max(array)
@@ -58,4 +90,4 @@ def qsort(inlist):
 a = [4, 65, 2, -31, 0, 99, 83, 782, 1]
 # print(quickSort(a))
 # print(heapsort(a))
-print(count_sort(a))
+# print(merge_sort(a))

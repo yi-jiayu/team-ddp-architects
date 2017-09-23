@@ -84,10 +84,10 @@ def sort():
     # output = sorted(data) #13 passed python sorted uses timsort
     # output = sorting.quickSort(data) #12 passed
     # output = sorting.heapsort(data) #13 passed
-    data.sort()
-    return jsonify(data)
-    # output = sorting.count_sort(data)
-    # return jsonify(output)
+    # data.sort() #13 passed, one timed out
+    # output = sorting.qsort(data)
+    output = sorting.numpyy(data).tolist()
+    return jsonify(output)
 
 @app.route('/calculateemptyarea',methods=['POST'])
 def calcemptyarea():
@@ -112,4 +112,4 @@ def warehouse_start():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
