@@ -93,7 +93,7 @@ def warehouse_start():
     first_map = start['map']
 
     def solve_one_map(run_id, solution):
-        for dir in solution1:
+        for dir in solution:
             resp = requests.post('https://cis2017-warehouse-keeper.herokuapp.com/move/{}?run_id={}'.format(dir, run_id))
             resp_data = resp.json()
             print(resp_data)
