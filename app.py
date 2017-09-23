@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 import train_planner
 import release_schedule
 import json
-
+import stringcompression
 app = Flask(__name__)
 
 
@@ -31,6 +31,26 @@ def train_planner_endpoint():
     answer = {'line': line, 'totalNumOfPassengers': num_passengers, 'reachingVia': station}
     return jsonify(answer)
 
+@app.route('/stringcompression/RLE', methods=['POST'])
+def str_RLE():
+	data = request.get_json()
+	inp = data.get('data')
+	output = RLE(inp)
+	return jsonify(output)
+
+@app.route('/stringcompression/LZW', methods=['POST'])
+def str_LZW():
+	data = request.get_json()
+	inp = data.get('data')
+	output = LZW(inp)
+	return jsonify(output)
+
+@app.route('/stringcompression/LZW', methods=['POST'])
+def str_WDE():
+	data = request.get_json()
+	inp = data.get('data')
+	output = WDE(inp)
+	return jsonify(output)
 
 if __name__ == '__main__':
     app.run()
