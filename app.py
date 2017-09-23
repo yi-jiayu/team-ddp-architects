@@ -101,7 +101,7 @@ def warehouse_start():
                 if 'next_map' not in resp_data:
                     return True, None
                 else:
-                    map1 = warehouse_keeper.parse_map(resp_data['map'])
+                    map1 = warehouse_keeper.parse_map(resp_data['next_map'])
                     return False, map1
 
     map1 = warehouse_keeper.parse_map(first_map)
