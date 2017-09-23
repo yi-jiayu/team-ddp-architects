@@ -4,6 +4,7 @@ import release_schedule
 import json
 import stringcompression
 import jewellery_heist
+import sorting 
 
 app = Flask(__name__)
 
@@ -72,7 +73,7 @@ def heist():
 def sort():
     print('sort:{}'.format(request.data))
     data = request.get_json()
-    output = sorted(data)
+    output = sorting.quickSort(data)
     return jsonify(output)
 
 if __name__ == '__main__':
