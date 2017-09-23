@@ -84,8 +84,8 @@ def sort():
     # output = sorted(data) #13 passed python sorted uses timsort
     # output = sorting.quickSort(data) #12 passed
     # output = sorting.heapsort(data) #13 passed
-    output = data.sort() #python sort uses mergesort
-    return jsonify(output)
+    # output = data.sort() #python sort uses mergesort
+    return jsonify(data.sort())
 
 
 @app.route('/calculateemptyarea',methods=['POST'])
