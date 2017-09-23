@@ -49,7 +49,6 @@ def LZW(inp):
 	count=256
 	output=0
 	for i in range(1,len(inp)):
-		# print(i)
 		c=inp[i]
 		temp = p+c
 		if temp in d:
@@ -59,33 +58,33 @@ def LZW(inp):
 			count+=1
 			output += 1
 			p = c
-		# print(d)
-		# print('temp',temp)
-		# print('p',p)
-		# if i == len(inp)-1:
-		# 	output+=1
-	return output*12
 
+	return output*12
 
 t2="BABAABAAA"
 # print(LZW(t2))
 
 def WDE(inp):
-	words = inp.split(" ")
-	numWords = len(words)
+	cur = ""
 	d={}
-	for word in words:
-		if word not in d:
-				d[word]=len(word)*8
+	non_alpha=0
+	numWords=0
+	for i in range(len(inp)):
+		if inp[i].isalpha():
+			cur +=inp[i]
+		else:
+			non_alpha +=1
+			numWords+=1
+			d[cur]=len(cur)*8
+			cur=""
+		# print('d',d)
+		if i==len(inp)-1:
+			numWords+=1
 
-	numChar = numWords-1
 	dictSize = sum(d.values())
-	# print('words', numWords)
-	# print('char', numChar)
 	# print('dictsize',dictSize)
-	return numWords*12 + numChar*12 + dictSize
-
-
+	# print('numWords', numWords)
+	return numWords*12 + non_alpha*12 + dictSize
 
 t3="HOW MUCH WOOD COULD A WOOD CHUCK CHUCK IF A WOOD CHUCK COULD CHUCK WOOD"
 # print(WDE(t3))
