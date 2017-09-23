@@ -101,10 +101,10 @@ def warehouse_start():
                 if 'next_map' not in resp_data:
                     return True, None
                 else:
-                    map1 = warehouse_keeper.parse_map(resp_data['next_map'])
+                    map1 = resp_data['next_map']
                     return False, map1
 
-    map1 = warehouse_keeper.parse_map(first_map)
+    map1 = first_map
     done = False
     while not done:
         solution1 = warehouse_keeper.solve(map1)
