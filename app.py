@@ -3,6 +3,7 @@ import train_planner
 import release_schedule
 import json
 import stringcompression
+
 app = Flask(__name__)
 
 
@@ -31,26 +32,32 @@ def train_planner_endpoint():
     answer = {'line': line, 'totalNumOfPassengers': num_passengers, 'reachingVia': station}
     return jsonify(answer)
 
+
 @app.route('/stringcompression/RLE', methods=['POST'])
 def str_RLE():
-	data = request.get_json()
-	inp = data.get('data')
-	output = stringcompression.RLE2(inp)
-	return jsonify(output)
+    print("RLE: {}".format(request.data))
+    data = request.get_json()
+    inp = data.get('data')
+    output = stringcompression.RLE2(inp)
+    return jsonify(output)
 
 @app.route('/stringcompression/LZW', methods=['POST'])
 def str_LZW():
-	data = request.get_json()
-	inp = data.get('data')
-	output = stringcompression.LZW(inp)
-	return jsonify(output)
+    print("LZW: {}".format(request.data))
+    data = request.get_json()
+    inp = data.get('data')
+    output = stringcompression.LZW(inp)
+    return jsonify(output)
+
 
 @app.route('/stringcompression/WDE', methods=['POST'])
 def str_WDE():
-	data = request.get_json()
-	inp = data.get('data')
-	output = stringcompression.WDE(inp)
-	return jsonify(output)
+    print("WDE: {}".format(request.data))
+    data = request.get_json()
+    inp = data.get('data')
+    output = stringcompression.WDE(inp)
+    return jsonify(output)
+
 
 if __name__ == '__main__':
     app.run()
