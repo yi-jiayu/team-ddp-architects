@@ -1,8 +1,9 @@
 # Question 1
+import requests
 
-def solve(inp1):
-    #inp1 = requests.get('http://cis2017-horse-racing.herokuapp.com/api/data')
-    inp = inp1.json()
+def solve(inp3):
+    inp1 = requests.get('http://cis2017-horse-racing.herokuapp.com/api/data')
+    inp = inp1.json() + inp3
     inp2 = inp  # copy of inp to be used for ordered data in Question 3
 
     raceorder = []  # all races in order by date and number
@@ -58,7 +59,7 @@ def solve(inp1):
             finalhorse = horses[i]
             horsecount = horses.count(horses[i])
 
-# Question 2
+        # Question 2
 
     betvalue = {}  # dictionary of points for jockeys
     betvalue1 = {}  # dictionary of points for trainers
@@ -69,7 +70,8 @@ def solve(inp1):
             betvalue[winners[i]] = 7 * winners.count(winners[i]) + 3 * winners2.count(winners[i]) + winners3.count(
                 winners[i])
         if trainers[i] not in betvalue1.keys():
-            betvalue1[trainers[i]] = 7 * trainers.count(trainers[i]) + 3 * trainers2.count(trainers[i]) + trainers3.count(trainers[i])
+            betvalue1[trainers[i]] = 7 * trainers.count(trainers[i]) + 3 * trainers2.count(
+                trainers[i]) + trainers3.count(trainers[i])
         if horses[i] not in betvalue2.keys():
             betvalue2[horses[i]] = 7 * horses.count(horses[i]) + 3 * horses2.count(horses[i]) + horses3.count(horses[i])
 
@@ -81,7 +83,7 @@ def solve(inp1):
     besttrainer = betvalue1final[0][0]  # most points trainer
     besthorse = betvalue2final[0][0]  # most points horse
 
-# Question 3
+    # Question 3
 
     inpo = sorted(inp2, key=lambda x: (x['racedate'], x['raceno']))  # data ordered by date first, then raceindex
 
@@ -135,8 +137,8 @@ def solve(inp1):
                 check1(raceunique[i], raceunique[i + 1], raceunique[i + 2])
                 if True:
                     dates.append([str(raceunique[i][0][1]) + ":" + str(raceunique[i][0][0]),
-                            str(raceunique[i + 1][0][1]) + ":" + str(raceunique[i + 1][0][0]),
-                            str(raceunique[i + 2][0][1]) + ":" + str(raceunique[i + 2][0][0])])
+                                  str(raceunique[i + 1][0][1]) + ":" + str(raceunique[i + 1][0][0]),
+                                  str(raceunique[i + 2][0][1]) + ":" + str(raceunique[i + 2][0][0])])
                 else:
                     continue
             else:
@@ -147,4 +149,6 @@ def solve(inp1):
     for i in range(len(jockeys)):
         q3.append({"jockeys": jockeys[i], "races": dates[i]})
 
-    print({"q1": {"horse": finalhorse, "jockey": finalwinner, "trainer": finaltrainer}, "q2": {"horse": besthorse, "jockey": bestwinner, "trainer": besttrainer}, "q3": q3})
+    ans = {"q1": {"horse": finalhorse, "jockey": finalwinner, "trainer": finaltrainer},
+           "q2": {"horse": besthorse, "jockey": bestwinner, "trainer": besttrainer}, "q3": q3}
+    return ans

@@ -11,7 +11,6 @@ import requests
 import warehouse_keeper
 import horse_racing
 
-=======
 import multiprocessing
 
 app = Flask(__name__)
@@ -80,10 +79,10 @@ def heist():
     return jsonify(output)
 
 @app.route('/horse-racing', methods=['POST'])
-def horse_racing():
+def racing():
     print('horse_racing:{}'.format(request.data))
-    inp1 = request.get_json()
-    output = horse_racing.solve(inp1)
+    inp3 = request.get_json()
+    output = horse_racing.solve(inp3)
     return jsonify(output)
 
 @app.route('/sort', methods=['POST'])

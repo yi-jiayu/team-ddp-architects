@@ -1,7 +1,7 @@
 from heapq import heappush, heappop
 import math
 from random import randint
-import numpy as np
+#import numpy as np
 
 from heapq import merge
   
@@ -17,12 +17,12 @@ def merge_sort(m):
     right = merge_sort(right)
     return list(merge(left, right))
 
-def numpyy(arr):
-    return np.sort(arr)
+#def numpyy(arr):
+ #   return np.sort(arr)
 
-def np_count_sort(a):
-    buckets = np.bincount(a)
-    return np.repeat(np.arange(buckets.shape()[0] + 1), buckets)
+#def np_count_sort(a):
+ #   buckets = np.bincount(a)
+  #  return np.repeat(np.arange(buckets.shape()[0] + 1), buckets)
 
 def ins_sort(k):
     for i in range(1,len(k)):    #since we want to swap an item with previous one, we start from 1
