@@ -1,6 +1,7 @@
 from queue import PriorityQueue
 from copy import deepcopy
 from collections import deque
+import requests
 
 
 def clean_map(map_):
@@ -180,6 +181,28 @@ def solve(map_):
                 q.put((f_1, g_1, h_1, next_state, new_actions))
 
     return None
+
+
+def solve_one_map(run_id, solution):
+    for dir in solution:
+        resp = requests.post('https://cis2017-warehouse-keeper.herokuapp.com/move/{}?run_id={}'.format(dir, run_id))
+        resp_data = resp.json()
+        print(resp_data)
+        if resp_data['win']:
+            if 'next_map' not in resp_data:
+                return True, None
+            else:
+                map1 = resp_data['next_map']
+                return False, map1
+
+
+def solve_async(run_id, first_map):
+    map_ = first_map
+    done = False
+    while not done:
+        soln = solve(map_)
+        done, next_map = solve_one_map(run_id, soln)
+        map_ = next_map
 
 
 if __name__ == '__main__':

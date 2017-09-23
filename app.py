@@ -7,6 +7,7 @@ import jewellery_heist
 import sorting
 import requests
 import warehouse_keeper
+import multiprocessing
 
 app = Flask(__name__)
 
@@ -89,27 +90,12 @@ def warehouse_start():
     start = request.get_json()
     print(start)
     run_id = start['run_id']
-
     first_map = start['map']
 
-    def solve_one_map(run_id, solution):
-        for dir in solution:
-            resp = requests.post('https://cis2017-warehouse-keeper.herokuapp.com/move/{}?run_id={}'.format(dir, run_id))
-            resp_data = resp.json()
-            print(resp_data)
-            if resp_data['win']:
-                if 'next_map' not in resp_data:
-                    return True, None
-                else:
-                    map1 = resp_data['next_map']
-                    return False, map1
+    p = multiprocessing.Process(target=warehouse_keeper.solve_async, args=(run_id, first_map))
+    p.start()
 
-    map1 = first_map
-    done = False
-    while not done:
-        solution1 = warehouse_keeper.solve(map1)
-        done, next_map = solve_one_map(run_id, solution1)
-        map1 = next_map
+    return
 
 
 if __name__ == '__main__':
