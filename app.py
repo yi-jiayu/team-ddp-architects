@@ -18,7 +18,7 @@ def release_schedule_endpoint():
     print(request.data)
     num_tasks, it_start, it_finish, tasks = release_schedule.parse_input(parsed_json)
     longest_gap = release_schedule.find_longest_gap(num_tasks, it_start, it_finish, tasks)
-    return '"{}"'.format(longest_gap)
+    return jsonify('{}'.format(longest_gap))
 
 
 @app.route('/trainPlanner', methods=['POST'])
@@ -29,7 +29,7 @@ def train_planner_endpoint():
     destination, stations = train_planner.parse_input(json_str)
     line, num_passengers, station = train_planner.plan(destination, stations)
     answer = {'line': line, 'totalNumOfPassengers': num_passengers, 'reachingVia': station}
-    return jsonify(json.dumps(answer))
+    return jsonify(answer)
 
 
 if __name__ == '__main__':
