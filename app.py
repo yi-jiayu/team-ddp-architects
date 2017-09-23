@@ -5,6 +5,7 @@ import json
 import stringcompression
 import jewellery_heist
 import sorting 
+import emptyarea
 
 app = Flask(__name__)
 
@@ -76,6 +77,13 @@ def sort():
     output = sorted(data)
     # output = sorting.quickSort(data) #12 passed
     # output = sorting.heapsort(data) #13 passed
+    return jsonify(output)
+
+@app.route('/calculateemptyarea',methods=['POST'])
+def calcemptyarea():
+    print('calcempty:{}'.format(request.data))
+    data = request.get_json()
+    output = emptyarea.calcArea(data)
     return jsonify(output)
 
 if __name__ == '__main__':
