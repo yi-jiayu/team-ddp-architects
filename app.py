@@ -4,7 +4,9 @@ import release_schedule
 import json
 import stringcompression
 import jewellery_heist
-import sorting 
+import sorting
+import requests
+import warehouse_keeper
 
 app = Flask(__name__)
 
@@ -43,6 +45,7 @@ def str_RLE():
     output = stringcompression.RLE2(inp)
     return jsonify(output)
 
+
 @app.route('/stringcompression/LZW', methods=['POST'])
 def str_LZW():
     print("LZW: {}".format(request.data))
@@ -60,14 +63,16 @@ def str_WDE():
     output = stringcompression.WDE(inp)
     return jsonify(output)
 
+
 @app.route('/heist', methods=['POST'])
 def heist():
     print('heist: {}'.format(request.data))
     data = request.get_json()
     maxweight = data.get('maxWeight')
     vault = data.get('vault')
-    output = jewellery_heist.solve(maxweight,vault)
+    output = jewellery_heist.solve(maxweight, vault)
     return jsonify(output)
+
 
 @app.route('/sort', methods=['POST'])
 def sort():
@@ -77,6 +82,35 @@ def sort():
     # output = sorting.quickSort(data) #12 passed
     # output = sorting.heapsort(data) #13 passed
     return jsonify(output)
+
+
+@app.route('/warehouse-keeper/game-start', methods=['POST'])
+def warehouse_start():
+    start = request.get_json()
+    print(start)
+    run_id = start['run_id']
+
+    first_map = start['map']
+
+    def solve_one_map(run_id, solution):
+        for dir in solution1:
+            resp = requests.post('https://cis2017-warehouse-keeper.herokuapp.com/move/{}?run_id={}'.format(dir, run_id))
+            resp_data = resp.json()
+            print(resp_data)
+            if resp_data['win']:
+                if 'next_map' not in resp_data:
+                    return True, None
+                else:
+                    map1 = warehouse_keeper.parse_map(resp_data['map'])
+                    return False, map1
+
+    map1 = warehouse_keeper.parse_map(first_map)
+    done = False
+    while not done:
+        solution1 = warehouse_keeper.solve(map1)
+        done, next_map = solve_one_map(run_id, solution1)
+        map1 = next_map
+
 
 if __name__ == '__main__':
     app.run()
