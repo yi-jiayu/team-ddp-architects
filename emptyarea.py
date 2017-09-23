@@ -1,52 +1,33 @@
 import json
+import math
 
-def findCorners(test):
-	cont_tl = (test['container']['coordinate']['X'],test['container']['coordinate']['Y'])
-	cont_tr = (test['container']['coordinate']['X']+test['container']['width'],test['container']['coordinate']['Y'])
-	cont_bl = (test['container']['coordinate']['X'],test['container']['coordinate']['Y']+test['container']['height'])
-	cont_br = (test['container']['coordinate']['X']+test['container']['width'],test['container']['coordinate']['Y']+test['container']['height'])
+def calcArea(test):
+	# cont = (xmin, xmax, ymin, ymax)
+	cont = (test['container']['coordinate']['X'], test['container']['coordinate']['X']+test['container']['width'], test['container']['coordinate']['Y'], test['container']['coordinate']['Y']+test['container']['height'])
 	cont_area = test['container']['width'] * test['container']['height']
-	print(cont_tl)
-	print(cont_br)
 
 	if "rectangle" in test:
-		rect_tl = (test['rectangle']['coordinate']['X'],test['rectangle']['coordinate']['Y']) 
-		rect_tr = (test['rectangle']['coordinate']['X']+test['rectangle']['width'],test['rectangle']['coordinate']['Y'])
-		rect_bl = (test['rectangle']['coordinate']['X'],test['rectangle']['coordinate']['Y']+test['rectangle']['height'])
-		rect_br = (test['rectangle']['coordinate']['X']+test['rectangle']['width'],test['rectangle']['coordinate']['Y']+test['rectangle']['height'])
+		child = (test['rectangle']['coordinate']['X'], test['rectangle']['coordinate']['X']+test['rectangle']['width'], test['rectangle']['coordinate']['Y'], test['rectangle']['coordinate']['Y']+test['rectangle']['height'])
+	elif "square" in test:
+		child = (test['square']['coordinate']['X'], test['square']['coordinate']['X']+test['square']['width'], test['square']['coordinate']['Y'], test['square']['coordinate']['Y']+test['square']['height'])
 
-	if "square" in test:
-		rect_tl = (test['square']['coordinate']['X'],test['square']['coordinate']['Y']) 
-		rect_tr = (test['square']['coordinate']['X']+test['square']['width'],test['square']['coordinate']['Y'])
-		rect_bl = (test['square']['coordinate']['X'],test['square']['coordinate']['Y']+test['square']['width'])
-		rect_br = (test['square']['coordinate']['X']+test['square']['width'],test['square']['coordinate']['Y']+test['square']['width'])
-
-	
-	# print(rect_tl)
-	# print(rect_tr)
-	# print(rect_bl)
-	# print(rect_br)
-	if rect_tl < cont_br and rect_tl > cont_tl: #if rect top left corner is in container
-		x = min(rect_tr[0],cont_tr[0]) - rect_tl[0]
-		y = min(rect_br[1],cont_br[1]) - rect_tl[1]
+	x = min(cont[1],child[1]) - max(cont[0],child[0])
+	y = min(cont[3],child[3]) - max(cont[2],child[2])
+	if x>0 and y>0:
+		return cont_area - x*y
 	else:
-		if rect_tr < cont_br and rect_tr > cont_tl: #if rect top right corner is in container
-			x = rect_tr[0] - min(rect_tl[0],cont_tl[0])
-			y = min(rect_bl[1],cont_tl[1]) - rect_tr[1]
-		else:
-
-			if rect_bl < cont_br and rect_bl > cont_tl:
-				x = min(cont_br[0],rect_br[0]) - rect_bl[0]
-				y = rect_bl[1] - min(rect_tl[1],cont_tl[1])
-			else:
-			 	if rect_br < cont_br and rect_br > cont_tl:
-			 		x = min(rect_tl[0],cont_tl[0]) - rect_tr[0]
-			 		y = min(rect_tr[1],cont_tl[1]) - rect_br[1]
-	print('x',x)
-	print('y',y)
-	return cont_area - x*y
+		return cont_area
 
 
+def divideCircle(r):
+	dx = 0.1
+	num = math.floor(r/0.1)
+	total = sum(range(num+1))
+	return total*4*0.1**2
+
+
+print(divideCircle(5))
+print(math.pi**2*5)
 testrect = {
         "container": {
             "coordinate": {
@@ -103,7 +84,8 @@ testcir = {
         }
     }
 
-print('rect',calcArea(testrect))
-print('sq', calcArea(testsq))
-print('rectnew', findCorners(testrect))
-print('sqnew', findCorners(testsq))
+# print('rect',calcArea(testrect))
+# print('sq', calcArea(testsq))
+# print('rectnew', findCorners(testrect))
+# print('sqnew', findCorners(testsq))
+print(calcArea(testrect))

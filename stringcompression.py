@@ -13,8 +13,8 @@ def RLE(input):
 				countofsingle-=1
 			d[strlist[i]]+=1
 			
-	print(countofsingle)
-	print(d.keys())
+	# print(countofsingle)
+	# print(d.keys())
 	numchar= 2 * (len(d.keys())-countofsingle) + countofsingle
 	return numchar*8
 
