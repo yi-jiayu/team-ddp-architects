@@ -1,4 +1,8 @@
 from heapq import heappush, heappop
+import math
+from random import randint
+
+
 
 def heapsort(iterable):
      h = []
@@ -25,6 +29,15 @@ def quickSort(arr):
         more = quickSort(more)
         return less + pivotList + more
 
+def qsort(inlist):
+    if inlist == []: 
+        return []
+    else:
+        pivot = inlist[0]
+        lesser = qsort([x for x in inlist[1:] if x < pivot])
+        greater = qsort([x for x in inlist[1:] if x >= pivot])
+        return lesser + [pivot] + greater
 a = [4, 65, 2, -31, 0, 99, 83, 782, 1]
 # print(quickSort(a))
-print(heapsort(a))
+# print(heapsort(a))
+print(qsort(a))
