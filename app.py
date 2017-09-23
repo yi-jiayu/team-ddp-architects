@@ -4,11 +4,15 @@ import release_schedule
 import json
 import stringcompression
 import jewellery_heist
+import sorting 
+import emptyarea
 import sorting
 import requests
 import warehouse_keeper
 import horse_racing
 
+=======
+import multiprocessing
 
 app = Flask(__name__)
 
@@ -86,9 +90,19 @@ def horse_racing():
 def sort():
     print('sort:{}'.format(request.data))
     data = request.get_json()
-    output = sorted(data)
+    # output = sorted(data) #13 passed python sorted uses timsort
     # output = sorting.quickSort(data) #12 passed
     # output = sorting.heapsort(data) #13 passed
+    # data.sort() #13 passed, one timed out
+    # output = sorting.qsort(data)
+    output = sorting.numpyy(data).tolist()
+    return jsonify(output)
+
+@app.route('/calculateemptyarea',methods=['POST'])
+def calcemptyarea():
+    print('calcempty:{}'.format(request.data))
+    data = request.get_json()
+    output = emptyarea.calcArea(data)
     return jsonify(output)
 
 
@@ -97,28 +111,14 @@ def warehouse_start():
     start = request.get_json()
     print(start)
     run_id = start['run_id']
-
     first_map = start['map']
 
-    def solve_one_map(run_id, solution):
-        for dir in solution:
-            resp = requests.post('https://cis2017-warehouse-keeper.herokuapp.com/move/{}?run_id={}'.format(dir, run_id))
-            resp_data = resp.json()
-            print(resp_data)
-            if resp_data['win']:
-                if 'next_map' not in resp_data:
-                    return True, None
-                else:
-                    map1 = warehouse_keeper.parse_map(resp_data['map'])
-                    return False, map1
+    p = multiprocessing.Process(target=warehouse_keeper.solve_async, args=(run_id, first_map))
+    p.start()
 
-    map1 = warehouse_keeper.parse_map(first_map)
-    done = False
-    while not done:
-        solution1 = warehouse_keeper.solve(map1)
-        done, next_map = solve_one_map(run_id, solution1)
-        map1 = next_map
+    return
+
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
