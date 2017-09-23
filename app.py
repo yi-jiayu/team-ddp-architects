@@ -35,7 +35,7 @@ def train_planner_endpoint():
 def str_RLE():
 	data = request.get_json()
 	inp = data.get('data')
-	output = stringcompression.RLE(inp)
+	output = stringcompression.RLE2(inp)
 	return jsonify(output)
 
 @app.route('/stringcompression/LZW', methods=['POST'])
