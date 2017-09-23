@@ -133,15 +133,12 @@ def solve(inp3):
                 continue
 
     for i in range((len(raceunique) - 2)):
-        if raceunique[i][0][0] - raceunique[i + 1][0][0] == -1:
-            if raceunique[i + 1][0][0] - raceunique[i + 2][0][0] == -1:
-                check1(raceunique[i], raceunique[i + 1], raceunique[i + 2])
-                if True:
-                    dates.append([str(raceunique[i][0][1]) + ":" + str(raceunique[i][0][0]),
+        if raceunique[i][0][0] - raceunique[i + 1][0][0] == -1 and raceunique[i + 1][0][0] - raceunique[i + 2][0][0] == -1:
+            check1(raceunique[i], raceunique[i + 1], raceunique[i + 2])
+            if True:
+                dates.append([str(raceunique[i][0][1]) + ":" + str(raceunique[i][0][0]),
                                   str(raceunique[i + 1][0][1]) + ":" + str(raceunique[i + 1][0][0]),
                                   str(raceunique[i + 2][0][1]) + ":" + str(raceunique[i + 2][0][0])])
-                else:
-                    continue
             else:
                 continue
         else:
