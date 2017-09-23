@@ -22,21 +22,21 @@ def train_planner_endpoint():
 def str_RLE():
 	data = request.get_json()
 	inp = data.get('data')
-	output = RLE(inp)
+	output = stringcompression.RLE(inp)
 	return jsonify(output)
 
 @app.route('/stringcompression/LZW', methods=['POST'])
 def str_LZW():
 	data = request.get_json()
 	inp = data.get('data')
-	output = LZW(inp)
+	output = stringcompression.LZW(inp)
 	return jsonify(output)
 
-@app.route('/stringcompression/LZW', methods=['POST'])
+@app.route('/stringcompression/WDE', methods=['POST'])
 def str_WDE():
 	data = request.get_json()
 	inp = data.get('data')
-	output = WDE(inp)
+	output = stringcompression.WDE(inp)
 	return jsonify(output)
 
 if __name__ == '__main__':
