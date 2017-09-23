@@ -62,8 +62,8 @@ def LZW(inp):
 		# print(d)
 		# print('temp',temp)
 		# print('p',p)
-		if i == len(inp)-1:
-			output+=1
+		# if i == len(inp)-1:
+		# 	output+=1
 	return output*12
 
 
