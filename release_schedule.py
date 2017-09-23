@@ -2,8 +2,6 @@ from datetime import datetime, timedelta
 from collections import namedtuple
 import json
 
-"""ts = time.strptime('28-05-2017 16:00:00.000+0800', '%d-%m-%Y %H:%M:%S.%f%z')"""
-
 date_format = '%d-%m-%Y %H:%M:%S.%f%z'
 Task = namedtuple('Task', ['start', 'end'])
 
@@ -23,6 +21,9 @@ def parse_input(parsed_json):
 
         task = Task(start, end)
         tasks.append(task)
+
+    tasks = sorted(tasks, key=lambda x: x.start)
+    print(tasks)
 
     return num_tasks, it_start, it_finish, tasks
 
