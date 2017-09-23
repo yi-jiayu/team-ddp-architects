@@ -1,3 +1,11 @@
+from heapq import heappush, heappop
+
+def heapsort(iterable):
+     h = []
+     for value in iterable:
+         heappush(h, value)
+     return [heappop(h) for i in range(len(h))]
+     
 def quickSort(arr):
     less = []
     pivotList = []
@@ -19,3 +27,4 @@ def quickSort(arr):
 
 a = [4, 65, 2, -31, 0, 99, 83, 782, 1]
 # print(quickSort(a))
+print(heapsort(a))

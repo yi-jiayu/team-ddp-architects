@@ -73,7 +73,8 @@ def heist():
 def sort():
     print('sort:{}'.format(request.data))
     data = request.get_json()
-    output = sorting.quickSort(data)
+    # output = sorting.quickSort(data) #12 passed
+    output = sorting.heapsort(data)
     return jsonify(output)
 
 if __name__ == '__main__':
