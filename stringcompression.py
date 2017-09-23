@@ -43,22 +43,29 @@ def findord(inp):
 		summ+=ord(i)
 	return summ
 
-def LZW(input):
-	strlist = list(input)
+def LZW(inp):
+	p = inp[0]
 	d={}
-	output=""
-	p=strlist[0]
-	for i in range(1,len(strlist)):
-		c=strlist[i]
-		if findord(p+c)<=255 or findord(p+c) in d:
-			p+=c
+	count=256
+	output=0
+	for i in range(1,len(inp)):
+		# print(i)
+		c=inp[i]
+		temp = p+c
+		if temp in d:
+			p += c
 		else:
-			d[findord(p+c)]=p+c
-			output+=p
-			p=c
+			d[temp]=count
+			count+=1
+			output += 1
+			p = c
+		# print(d)
+		# print('temp',temp)
+		# print('p',p)
+		if i == len(inp)-1:
+			output+=1
+	return output*12
 
-	# print('output',output)
-	return len(output)*12
 
 t2="BABAABAAA"
 # print(LZW(t2))
