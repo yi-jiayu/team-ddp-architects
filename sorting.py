@@ -2,7 +2,25 @@ from heapq import heappush, heappop
 import math
 from random import randint
 
+def count_sort(array):
+    maximum = max(array)
+    minimum = min(array)
+    count_array = [0]*(maximum-minimum+1)
 
+    for val in array:
+        count_array[val-minimum] += 1
+
+    sorted_array = []
+    for i in range(minimum, maximum+1):
+        if count_array[i-minimum] > 0:
+            for j in range(0, count_array[i-minimum]):
+                sorted_array.append(i)
+
+    return sorted_array
+
+# array = [3,2,-1,1,5,0,10,18,25,25]
+# print array
+# count_sort(array)
 
 def heapsort(iterable):
      h = []
@@ -40,4 +58,4 @@ def qsort(inlist):
 a = [4, 65, 2, -31, 0, 99, 83, 782, 1]
 # print(quickSort(a))
 # print(heapsort(a))
-print(qsort(a))
+print(count_sort(a))
