@@ -5,12 +5,11 @@ Station = namedtuple('Station', ['name', 'passengers', 'neighbours'])
 Connection = namedtuple('Connection', ['name', 'line'])
 
 
-def parse_input(json_str: str):
-    inp = json.loads(json_str)
-    destination = inp['destination']
+def parse_input(parsed_json):
+    destination = parsed_json['destination']
 
     stations = {}
-    for station in inp['stations']:
+    for station in parsed_json['stations']:
         name, passengers = station['name'], station['passengers']
 
         neighbours = []
@@ -23,7 +22,7 @@ def parse_input(json_str: str):
     return destination, stations
 
 
-def train_planner(destination, stations):
+def plan(destination, stations):
     passengers_via = {}
     queue = deque()
     visited = {destination}
@@ -265,4 +264,4 @@ if __name__ == '__main__':
 
     destination, stations = parse_input(test_input)
 
-    print(train_planner(destination, stations))
+    print(plan(destination, stations))
