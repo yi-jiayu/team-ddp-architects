@@ -7,6 +7,8 @@ import jewellery_heist
 import sorting
 import requests
 import warehouse_keeper
+import horse_racing
+
 
 app = Flask(__name__)
 
@@ -73,6 +75,12 @@ def heist():
     output = jewellery_heist.solve(maxweight, vault)
     return jsonify(output)
 
+@app.route('/horse-racing', methods=['POST'])
+def horse_racing():
+    print('horse_racing:{}'.format(request.data))
+    inp1 = request.get_json()
+    output = horse_racing.solve(inp1)
+    return jsonify(output)
 
 @app.route('/sort', methods=['POST'])
 def sort():
