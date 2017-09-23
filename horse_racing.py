@@ -4,7 +4,7 @@ import requests
 def solve(inp3):
     #inp1 = requests.get('http://cis2017-horse-racing.herokuapp.com/api/data')
     #inp = inp1.json() + inp3
-    inp = inp3.json()
+    inp = inp3
     inp2 = inp  # copy of inp to be used for ordered data in Question 3
 
     raceorder = []  # all races in order by date and number
