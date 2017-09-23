@@ -12,6 +12,7 @@ def hello_world():
 
 @app.route('/trainPlanner', methods=['POST'])
 def train_planner_endpoint():
+    print(request.data)
     json_str = request.get_json()
     print(json_str)
     destination, stations = train_planner.parse_input(json_str)
