@@ -68,5 +68,12 @@ def heist():
     output = jewellery_heist.solve(maxweight,vault)
     return jsonify(output)
 
+@app.route('/sort', methods=['POST'])
+def sort():
+    print('sort:{}'.format(request.data))
+    data = request.get_json()
+    output = sorted(data)
+    return jsonify(output)
+
 if __name__ == '__main__':
     app.run()

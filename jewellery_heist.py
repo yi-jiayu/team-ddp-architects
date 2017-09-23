@@ -35,4 +35,4 @@ def solve(maxWeight,vault):
   ans = {"heist": heist}
   return ans
 
-print(solve(inp['maxWeight'],inp['vault']))
+# print(solve(inp['maxWeight'],inp['vault']))
