@@ -14,6 +14,8 @@ def hello_world():
 @app.route('/releaseSchedule', methods=['POST'])
 def release_schedule_endpoint():
     parsed_json = request.get_json()
+    print("RELEASE SCHEDULE")
+    print(request.data)
     num_tasks, it_start, it_finish, tasks = release_schedule.parse_input(parsed_json)
     longest_gap = release_schedule.find_longest_gap(num_tasks, it_start, it_finish, tasks)
     return str(longest_gap)
