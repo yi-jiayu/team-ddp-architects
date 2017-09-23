@@ -3,6 +3,7 @@ import train_planner
 import release_schedule
 import json
 import stringcompression
+import jewellery_heist
 
 app = Flask(__name__)
 
@@ -58,6 +59,14 @@ def str_WDE():
     output = stringcompression.WDE(inp)
     return jsonify(output)
 
+@app.route('/heist', methods=['POST'])
+def heist():
+    print('heist: {}'.format(request.data))
+    data = request.get_json()
+    maxweight = data.get('maxWeight')
+    vault = data.get('vault')
+    output = jewellery_heist.solve(maxweight,vault)
+    return jsonify(output)
 
 if __name__ == '__main__':
     app.run()

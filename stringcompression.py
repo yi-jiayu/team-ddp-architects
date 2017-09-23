@@ -19,14 +19,13 @@
 t= "RRRRRRTTTTYYYULLL"
 # print(RLE(t))
 
-def RLE2(input):
-	strlist = list(input)
-	last = strlist[0]
+def RLE2(inp):
+	last = inp[0]
 	output=0
 	count=1
 	# check=""
-	for i in range(1,len(strlist)):
-		cur = strlist[i]
+	for i in range(1,len(inp)):
+		cur = inp[i]
 		if cur!=last:
 			# check+=str(count)+last
 			if count>9:
@@ -43,7 +42,7 @@ def RLE2(input):
 			count+=1
 
 		last=cur
-		if i==len(strlist)-1:
+		if i==len(inp)-1:
 			if count>9:
 				output+=3
 			elif count>99:
@@ -56,7 +55,7 @@ def RLE2(input):
 	# print(check)
 	return output*8
 
-# print(RLE2(t))
+print(RLE2(t))
 # t6="WWWWWWWWWWWWBWWWWWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWBWWWWWWWWWWWWWW"
 # print(RLE(t6))
 # print(RLE2(t6))
