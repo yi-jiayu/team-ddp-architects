@@ -4,15 +4,12 @@ import release_schedule
 import json
 import stringcompression
 import jewellery_heist
-<<<<<<< HEAD
 import sorting 
 import emptyarea
-=======
 import sorting
 import requests
 import warehouse_keeper
 import multiprocessing
->>>>>>> 641cfdf3ad5a788c15599ad9c12eb2072e9b538c
 
 app = Flask(__name__)
 
