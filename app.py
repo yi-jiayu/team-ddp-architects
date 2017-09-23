@@ -81,7 +81,7 @@ def heist():
 @app.route('/horse-racing', methods=['POST'])
 def racing():
     print('horse_racing:{}'.format(request.data))
-    inp3 = request.get_json()
+    inp3 = request.get_json().get("data")
     output = horse_racing.solve(inp3)
     return jsonify(output)
 
