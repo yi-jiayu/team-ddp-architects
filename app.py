@@ -12,14 +12,6 @@ import warehouse_keeper_2 as warehouse_keeper
 import horse_racing
 
 import multiprocessing
-import sorting
-import emptyarea
-import sorting
-import requests
-import warehouse_keeper
-import horse_racing
-
-import multiprocessing
 
 app = Flask(__name__)
 
@@ -94,14 +86,6 @@ def racing():
     output = horse_racing.solve(inp3)
     return jsonify(output)
 
-
-@app.route('/horse-racing', methods=['POST'])
-def racing():
-    print('horse_racing:{}'.format(request.data))
-    inp3 = request.get_json().get("data")
-    output = horse_racing.solve(inp3)
-    return jsonify(output)
-
 @app.route('/sort', methods=['POST'])
 def sort():
     print(request.data)
@@ -121,12 +105,6 @@ def calcemptyarea():
     print('calcempty:{}'.format(request.data))
     data = request.get_json()
     output = emptyarea.calcArea(data)
-    # output = sorted(data) #13 passed python sorted uses timsort
-    # output = sorting.quickSort(data) #12 passed
-    # output = sorting.heapsort(data) #13 passed
-    # data.sort() #13 passed, one timed out
-    # output = sorting.qsort(data)
-    output = sorting.numpyy(data).tolist()
     return jsonify(output)
 
 
@@ -141,29 +119,7 @@ def warehouse_start():
     p.start()
 
     return
-
-
-@app.route('/calculateemptyarea',methods=['POST'])
-def calcemptyarea():
-    print('calcempty:{}'.format(request.data))
-    data = request.get_json()
-    output = emptyarea.calcArea(data)
-    return jsonify(output)
-
-
-@app.route('/warehouse-keeper/game-start', methods=['POST'])
-def warehouse_start():
-    start = request.get_json()
-    print(start)
-    run_id = start['run_id']
-    first_map = start['map']
-
-    p = multiprocessing.Process(target=warehouse_keeper.solve_async, args=(run_id, first_map))
-    p.start()
-
-    return
-
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
