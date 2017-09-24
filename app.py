@@ -108,33 +108,6 @@ def sort():
     # return jsonify(output)
 
 
-@app.route('/calculateemptyarea', methods=['POST'])
-def calcemptyarea():
-    print('calcempty:{}'.format(request.data))
-    data = request.get_json()
-    output = emptyarea.calcArea(data)
-    # output = sorted(data) #13 passed python sorted uses timsort
-    # output = sorting.quickSort(data) #12 passed
-    # output = sorting.heapsort(data) #13 passed
-    # data.sort() #13 passed, one timed out
-    # output = sorting.qsort(data)
-    output = sorting.numpyy(data).tolist()
-    return jsonify(output)
-
-
-@app.route('/warehouse-keeper/game-start', methods=['POST'])
-def warehouse_start():
-    start = request.get_json()
-    print(start)
-    run_id = start['run_id']
-    first_map = start['map']
-
-    p = multiprocessing.Process(target=warehouse_keeper.solve_async, args=(run_id, first_map))
-    p.start()
-
-    return
-
-
 @app.route('/calculateemptyarea',methods=['POST'])
 def calcemptyarea():
     print('calcempty:{}'.format(request.data))
@@ -165,4 +138,4 @@ def exchange():
     return jsonify('hello')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
