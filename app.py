@@ -8,7 +8,7 @@ import sorting
 import emptyarea
 import sorting
 import requests
-import warehouse_keeper
+import warehouse_keeper_2 as warehouse_keeper
 import horse_racing
 
 import multiprocessing
