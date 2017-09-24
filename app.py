@@ -5,6 +5,13 @@ import json
 import stringcompression
 import jewellery_heist
 import sorting 
+import emptyarea
+import sorting
+import requests
+import warehouse_keeper
+import horse_racing
+
+import multiprocessing
 
 app = Flask(__name__)
 
@@ -43,6 +50,7 @@ def str_RLE():
     output = stringcompression.RLE2(inp)
     return jsonify(output)
 
+
 @app.route('/stringcompression/LZW', methods=['POST'])
 def str_LZW():
     print("LZW: {}".format(request.data))
@@ -60,23 +68,56 @@ def str_WDE():
     output = stringcompression.WDE(inp)
     return jsonify(output)
 
+
 @app.route('/heist', methods=['POST'])
 def heist():
     print('heist: {}'.format(request.data))
     data = request.get_json()
     maxweight = data.get('maxWeight')
     vault = data.get('vault')
-    output = jewellery_heist.solve(maxweight,vault)
+    output = jewellery_heist.solve(maxweight, vault)
+    return jsonify(output)
+
+@app.route('/horse-racing', methods=['POST'])
+def racing():
+    print('horse_racing:{}'.format(request.data))
+    inp3 = request.get_json().get("data")
+    output = horse_racing.solve(inp3)
     return jsonify(output)
 
 @app.route('/sort', methods=['POST'])
 def sort():
     print('sort:{}'.format(request.data))
     data = request.get_json()
-    output = sorted(data)
+    # output = sorted(data) #13 passed python sorted uses timsort
     # output = sorting.quickSort(data) #12 passed
     # output = sorting.heapsort(data) #13 passed
+    # data.sort() #13 passed, one timed out
+    # output = sorting.qsort(data)
+    output = sorting.numpyy(data).tolist()
     return jsonify(output)
 
+@app.route('/calculateemptyarea',methods=['POST'])
+def calcemptyarea():
+    print('calcempty:{}'.format(request.data))
+    data = request.get_json()
+    output = emptyarea.calcArea(data)
+    return jsonify(output)
+
+
+@app.route('/warehouse-keeper/game-start', methods=['POST'])
+def warehouse_start():
+    start = request.get_json()
+    print(start)
+    run_id = start['run_id']
+    first_map = start['map']
+
+    p = multiprocessing.Process(target=warehouse_keeper.solve_async, args=(run_id, first_map))
+    p.start()
+
+    return
+
+
+
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
