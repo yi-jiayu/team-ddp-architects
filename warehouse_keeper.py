@@ -89,31 +89,31 @@ def opposite(origin, beside):
 def possible_pushes(state, accessible_locations):
     for r, c in find_boxes(state):
         # push down
-        if r > 0 and state[r-1][c] in accessible_locations and state[r+1][c] != 'x':
+        if r > 0 and state[r - 1][c] in accessible_locations and state[r + 1][c] != 'x':
             next_state = deepcopy(state)
             next_state[r][c] = 'b'
-            next_state[r+1][c] = 'o'
+            next_state[r + 1][c] = 'o'
             yield 'down', next_state
 
         # push up
-        if r < len(state) - 1 and state[r+1][c] in accessible_locations and state[r-1][c] != 'x':
+        if r < len(state) - 1 and state[r + 1][c] in accessible_locations and state[r - 1][c] != 'x':
             next_state = deepcopy(state)
             next_state[r][c] = 'b'
             next_state[r - 1][c] = 'o'
             yield 'up', next_state
 
         # push right
-        if c > 0 and state[r][c-1] in accessible_locations and state[r][c+1] != 'x':
+        if c > 0 and state[r][c - 1] in accessible_locations and state[r][c + 1] != 'x':
             next_state = deepcopy(state)
             next_state[r][c] = 'b'
-            next_state[r][c+1] = 'o'
+            next_state[r][c + 1] = 'o'
             yield 'right', next_state
 
         # push left
-        if c < len(state[0]) - 1 and state[r][c+1] in accessible_locations and state[r][c-1] != 'x':
+        if c < len(state[0]) - 1 and state[r][c + 1] in accessible_locations and state[r][c - 1] != 'x':
             next_state = deepcopy(state)
             next_state[r][c] = 'b'
-            next_state[r][c-1] = 'o'
+            next_state[r][c - 1] = 'o'
             yield 'left', next_state
 
 
@@ -323,35 +323,38 @@ if __name__ == '__main__':
             "xxx-*-xx",
             "xxx---xx"]
 
-    print(solve(map1))
+    for row in map1:
+        print(row.replace('x', '#').replace('-', '#').replace('o', '$').replace('*', '.').replace('b', '@'))
 
-    # map1 = clean_map(map1)
-    # print(normalised_player_position(map1))
+        # print(solve(map1))
 
-    # map2 = ['-----xxxx',
-    #         '-b  -xxxx',
-    #         '- oo- ---',
-    #         '- o - -*-',
-    #         '--- ---*-',
-    #         'x--    *-',
-    #         'x-   -  -',
-    #         'x-   ----',
-    #         'x-----xxx']
-    #
-    # print(solve(map2))
-    #
-    # map3 = ['----------',
-    #         '-**      -',
-    #         '-**o  -  -',
-    #         '-  -o-- --',
-    #         '- o     -x',
-    #         '----- - -x',
-    #         'xx- o b -x',
-    #         'xx-     -x',
-    #         'xx-------x']
-    #
-    # print(solve(map3))
+        # map1 = clean_map(map1)
+        # print(normalised_player_position(map1))
 
-    # targets = find_targets(map3)
-    # depth_maps = [distances_from_target(map3, t) for t in targets]
-    # print(heuristic(map3, depth_maps))
+        # map2 = ['-----xxxx',
+        #         '-b  -xxxx',
+        #         '- oo- ---',
+        #         '- o - -*-',
+        #         '--- ---*-',
+        #         'x--    *-',
+        #         'x-   -  -',
+        #         'x-   ----',
+        #         'x-----xxx']
+        #
+        # print(solve(map2))
+        #
+        # map3 = ['----------',
+        #         '-**      -',
+        #         '-**o  -  -',
+        #         '-  -o-- --',
+        #         '- o     -x',
+        #         '----- - -x',
+        #         'xx- o b -x',
+        #         'xx-     -x',
+        #         'xx-------x']
+        #
+        # print(solve(map3))
+
+        # targets = find_targets(map3)
+        # depth_maps = [distances_from_target(map3, t) for t in targets]
+        # print(heuristic(map3, depth_maps))
