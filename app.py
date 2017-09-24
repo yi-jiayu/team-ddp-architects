@@ -94,14 +94,6 @@ def racing():
     output = horse_racing.solve(inp3)
     return jsonify(output)
 
-
-@app.route('/horse-racing', methods=['POST'])
-def racing():
-    print('horse_racing:{}'.format(request.data))
-    inp3 = request.get_json().get("data")
-    output = horse_racing.solve(inp3)
-    return jsonify(output)
-
 @app.route('/sort', methods=['POST'])
 def sort():
     print(request.data)
@@ -173,4 +165,4 @@ def exchange():
     return jsonify('hello')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
