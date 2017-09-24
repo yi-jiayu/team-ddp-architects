@@ -1,10 +1,9 @@
 # Question 1
 import requests
-inp3 = requests.get('http://cis2017-horse-racing.herokuapp.com/api/data').json()
+
 
 def solve(inp3):
-
-    #inp = inp1.json() + inp3
+    # inp = inp1.json() + inp3
     inp = inp3
     inp2 = inp  # copy of inp to be used for ordered data in Question 3
 
@@ -61,7 +60,7 @@ def solve(inp3):
             finalhorse = horses[i]
             horsecount = horses.count(horses[i])
 
-        # Question 2
+            # Question 2
 
     betvalue = {}  # dictionary of points for jockeys
     betvalue1 = {}  # dictionary of points for trainers
@@ -134,8 +133,9 @@ def solve(inp3):
                 continue
 
     for i in range((len(raceunique) - 2)):
-        if raceunique[i][0][1] == raceunique[i+1][0][1] and raceunique[i+1][0][1] == raceunique[i+2][0][1]:
-            if raceunique[i][0][0] - raceunique[i + 1][0][0] == -1 and raceunique[i + 1][0][0] - raceunique[i + 2][0][0] == -1:
+        if raceunique[i][0][1] == raceunique[i + 1][0][1] and raceunique[i + 1][0][1] == raceunique[i + 2][0][1]:
+            if raceunique[i][0][0] - raceunique[i + 1][0][0] == -1 and raceunique[i + 1][0][0] - raceunique[i + 2][0][
+                0] == -1:
                 check1(raceunique[i], raceunique[i + 1], raceunique[i + 2])
                 if True:
                     dates.append([str(raceunique[i][0][1]) + ":" + str(raceunique[i][0][0]),
@@ -143,7 +143,7 @@ def solve(inp3):
                                   str(raceunique[i + 2][0][1]) + ":" + str(raceunique[i + 2][0][0])])
                 else:
                     continue
-        elif raceunique[i][0][1] != raceunique[i+1][0][1] and raceunique[i+1][0][1] == raceunique[i+2][0][1]:
+        elif raceunique[i][0][1] != raceunique[i + 1][0][1] and raceunique[i + 1][0][1] == raceunique[i + 2][0][1]:
             if raceunique[i + 1][0][0] - raceunique[i + 2][0][0] == -1:
                 check1(raceunique[i], raceunique[i + 1], raceunique[i + 2])
                 if True:
@@ -152,7 +152,7 @@ def solve(inp3):
                                   str(raceunique[i + 2][0][1]) + ":" + str(raceunique[i + 2][0][0])])
                 else:
                     continue
-        elif raceunique[i][0][1] == raceunique[i+1][0][1] and raceunique[i+1][0][1] != raceunique[i+2][0][1]:
+        elif raceunique[i][0][1] == raceunique[i + 1][0][1] and raceunique[i + 1][0][1] != raceunique[i + 2][0][1]:
             if raceunique[i][0][0] - raceunique[i + 1][0][0] == -1:
                 check1(raceunique[i], raceunique[i + 1], raceunique[i + 2])
                 if True:
@@ -169,4 +169,7 @@ def solve(inp3):
            "q2": {"horse": besthorse, "jockey": bestwinner, "trainer": besttrainer}, "q3": q3}
     return ans
 
-print(solve(inp3))
+
+if __name__ == '__main__':
+    inp3 = requests.get('http://cis2017-horse-racing.herokuapp.com/api/data').json()
+    print(solve(inp3))
