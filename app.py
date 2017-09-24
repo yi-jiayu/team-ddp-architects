@@ -163,7 +163,14 @@ def warehouse_start():
 
     return
 
-
+@app.route('/mini-exchange', methods=['POST'])
+def exchange():
+    inp = request.get_json()
+    print('EXCHANGE', inp.data)
+    while inp.get('messageType')!="EOD":
+        inp = request.get_json()
+        print('EXCHANGE', inp.data)
+    return jsonify('hello')
 
 if __name__ == '__main__':
     app.run(debug=True)
