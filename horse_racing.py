@@ -1,11 +1,12 @@
 # Question 1
-import requests
-
+#import requests
+#inp4 = requests.get('http://cis2017-horse-racing.herokuapp.com/api/data')
+#inp3 = inp4.json()
 
 def solve(inp3):
-    # inp = inp1.json() + inp3
+    #inp = inp1.json() + inp3
     inp = inp3
-    inp2 = inp  # copy of inp to be used for ordered data in Question 3
+    #inp2 = inp  # copy of inp to be used for ordered data in Question 3
 
     raceorder = []  # all races in order by date and number
     racepool = []  # list of all unique races
@@ -60,7 +61,7 @@ def solve(inp3):
             finalhorse = horses[i]
             horsecount = horses.count(horses[i])
 
-            # Question 2
+        # Question 2
 
     betvalue = {}  # dictionary of points for jockeys
     betvalue1 = {}  # dictionary of points for trainers
@@ -86,20 +87,21 @@ def solve(inp3):
 
     # Question 3
 
-    inpo = sorted(inp2, key=lambda x: (x['racedate'], x['raceno']))  # data ordered by date first, then raceindex
+    inpo = sorted(inp, key=lambda x: (x['racedate'], x['raceno']))  # data ordered by date first, then raceindex
 
     for i in range(len(inpo)):
         a = (int(inpo[i]['raceno']), inpo[i]['racedate'])
         raceorder.append(a)
 
-    raceunique = sorted(set(raceorder), key=lambda x: (x[0], x[1]))
+    race1 = set(raceorder)
+    raceunique = sorted(race1, key=lambda x: (x[1], x[0]))
 
     for i in range(len(raceunique)):
         raceunique[i] = [raceunique[i]]
 
     for i in range(len(raceunique)):
         for j in range(len(inpo)):
-            if raceunique[i][0][0] == inpo[j]['raceno'] and raceunique[i][0][1] == inpo[j]['racedate']:
+            if raceunique[i][0][0] == int(inpo[j]['raceno']) and raceunique[i][0][1] == inpo[j]['racedate']:
                 a = (inpo[j]['jockeycode'], int(inpo[j]['Placing']))
                 raceunique[i].append(a)
 
@@ -120,10 +122,15 @@ def solve(inp3):
             name2 = z1[f + 1][0]
             name3 = z1[f + 2][0]
             for g in range(1, (len(z2) - 2)):
-                if name1 in z2[g] and name2 in z2[g + 1] and name3 in z2[g + 2]:
+                if name1 == z2[g][0] and name2 == z2[g + 1][0] and name3 == z2[g + 2][0]:
+                    #print("True1")
                     for h in range(1, (len(z3) - 2)):
-                        if name1 in z3[h] and name2 in z3[h + 1] and name3 in z3[h + 2]:
+                        if name1 == z3[h][0] and name2 == z3[h + 1][0] and name3 == z3[h + 2][0]:
+                            #print("YES")
                             jockeys.append([name1, name2, name3])
+                            dates.append([str(z1[0][1]) + ":" + str(z1[0][0]),
+                                  str(z2[0][1]) + ":" + str(z2[0][0]),
+                                  str(z3[0][1]) + ":" + str(z3[0][0])])
                             return True
                         else:
                             continue
@@ -133,34 +140,14 @@ def solve(inp3):
                 continue
 
     for i in range((len(raceunique) - 2)):
-        if raceunique[i][0][1] == raceunique[i + 1][0][1] and raceunique[i + 1][0][1] == raceunique[i + 2][0][1]:
-            if raceunique[i][0][0] - raceunique[i + 1][0][0] == -1 and raceunique[i + 1][0][0] - raceunique[i + 2][0][
-                0] == -1:
+        if raceunique[i][0] != raceunique[i+1][0]:
+            if raceunique[i+1][0] != raceunique[i + 2][0]:
                 check1(raceunique[i], raceunique[i + 1], raceunique[i + 2])
-                if True:
-                    dates.append([str(raceunique[i][0][1]) + ":" + str(raceunique[i][0][0]),
-                                  str(raceunique[i + 1][0][1]) + ":" + str(raceunique[i + 1][0][0]),
-                                  str(raceunique[i + 2][0][1]) + ":" + str(raceunique[i + 2][0][0])])
-                else:
-                    continue
-        elif raceunique[i][0][1] != raceunique[i + 1][0][1] and raceunique[i + 1][0][1] == raceunique[i + 2][0][1]:
-            if raceunique[i + 1][0][0] - raceunique[i + 2][0][0] == -1:
-                check1(raceunique[i], raceunique[i + 1], raceunique[i + 2])
-                if True:
-                    dates.append([str(raceunique[i][0][1]) + ":" + str(raceunique[i][0][0]),
-                                  str(raceunique[i + 1][0][1]) + ":" + str(raceunique[i + 1][0][0]),
-                                  str(raceunique[i + 2][0][1]) + ":" + str(raceunique[i + 2][0][0])])
-                else:
-                    continue
-        elif raceunique[i][0][1] == raceunique[i + 1][0][1] and raceunique[i + 1][0][1] != raceunique[i + 2][0][1]:
-            if raceunique[i][0][0] - raceunique[i + 1][0][0] == -1:
-                check1(raceunique[i], raceunique[i + 1], raceunique[i + 2])
-                if True:
-                    dates.append([str(raceunique[i][0][1]) + ":" + str(raceunique[i][0][0]),
-                                  str(raceunique[i + 1][0][1]) + ":" + str(raceunique[i + 1][0][0]),
-                                  str(raceunique[i + 2][0][1]) + ":" + str(raceunique[i + 2][0][0])])
-                else:
-                    continue
+        else:
+            continue
+
+    #print(jockeys)
+    #print(dates)
 
     for i in range(len(jockeys)):
         q3.append({"jockeys": jockeys[i], "races": dates[i]})
@@ -169,7 +156,6 @@ def solve(inp3):
            "q2": {"horse": besthorse, "jockey": bestwinner, "trainer": besttrainer}, "q3": q3}
     return ans
 
-
 if __name__ == '__main__':
-    inp3 = requests.get('http://cis2017-horse-racing.herokuapp.com/api/data').json()
-    print(solve(inp3))
+    import requests
+#print(solve(inp3))
