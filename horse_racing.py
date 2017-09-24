@@ -6,7 +6,7 @@
 def solve(inp3):
     #inp = inp1.json() + inp3
     inp = inp3
-    inp2 = inp  # copy of inp to be used for ordered data in Question 3
+    #inp2 = inp  # copy of inp to be used for ordered data in Question 3
 
     raceorder = []  # all races in order by date and number
     racepool = []  # list of all unique races
