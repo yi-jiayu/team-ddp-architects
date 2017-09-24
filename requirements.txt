@@ -2,4 +2,4 @@ Flask
 gunicorn
 requests
 numpy
-munkres=1.0.12
+munkres==1.0.12
